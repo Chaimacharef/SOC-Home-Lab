@@ -1,22 +1,23 @@
-# SOC-Home-Lab
+# SOC Home Lab
 
 ## Overview
-Built a simulated Security Operations Center environment
-to practice threat detection and incident response.
-
-## Tools Used
-- Wazuh SIEM
-- Windows Server
-- Kali Linux
-- VirtualBox
+A hands-on Security Operations Center laboratory built to practice detection, investigation, and incident response using Wazuh SIEM, Windows endpoints, Sysmon, and Kali Linux.
 
 ## Architecture
 (image here)
 
+## Tools Used 
+- Wazuh SIEM
+- Windows Event Logs
+- Sysmon
+- Kali Linux
+-  VirtualBox
+
 ## Attacks Simulated
-- Brute force attack
-- Phishing simulation
+- Failed login investigation
+- Nmap Recon detection
 - Suspicious PowerShell execution
+- Malware detection
 
 ## Findings
 Detected alerts, analyzed logs, and created incident reports.
