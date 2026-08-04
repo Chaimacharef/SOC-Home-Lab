@@ -4,7 +4,8 @@
 A hands-on Security Operations Center laboratory built to practice detection, investigation, and incident response using Wazuh SIEM, Windows endpoints, Sysmon, and Kali Linux.
 
 ## Architecture
-(image here)
+<img width="2000" height="1414" alt="architecture " src="https://github.com/user-attachments/assets/f2069641-6d5e-46f1-988d-10a3e9a460c8" />
+
 
 ## Tools Used 
 - Wazuh SIEM
