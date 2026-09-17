@@ -6,13 +6,13 @@ A hands-on Security Operations Center (SOC) home lab designed to simulate real-w
 ## Architecture
 <img width="2000" height="1414" alt="architecture " src="https://github.com/user-attachments/assets/f2069641-6d5e-46f1-988d-10a3e9a460c8" />
 
-## Tools Used 
-- Wazuh SIEM
-- Windows 10 Endpoint
-- Sysmon
-- Windows Event Logs
-- Kali Linux
-- VirtualBox
+## Tools Used
+- **Wazuh SIEM**
+- **Windows 10 Endpoint**
+  - [Sysmon](configurations/01-sysmon-tuning.md) (configured with Olaf Hartong's Sysmon-Modular for enhanced telemetry)
+  - Windows Event Logs
+- **Kali Linux**
+- **VirtualBox**
 
 ## Security Scenarios 
 - Failed login investigation
