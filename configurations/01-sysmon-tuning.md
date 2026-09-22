@@ -1,7 +1,10 @@
-Default Windows Event Logging provides limited visibility into low-level host activity, often missing critical process injection, memory access, and command-line execution details. To build a detection-ready environment, **System Monitor (Sysmon v15.22)** was deployed on the Windows endpoint and tuned using **Olaf Hartong’s `sysmon-modular`** configuration ruleset. Telemetry streams were subsequently integrated into the **Wazuh SIEM** pipeline for centralized alerting.
+## 📌 Overview
+By default, Windows Sysmon generates thousands of noisy, routine system logs every hour—making it easy for actual malicious activity to get lost in the clutter. 
+
+This repository documents how I configured and tuned Microsoft Sysmon using **Olaf Hartong’s `sysmon-modular` framework**. The goal of this project is to filter out harmless background OS noise, reduce SIEM storage bloat, and ensure high-fidelity telemetry is captured for critical attack techniques (like process injection, credential dumping, and registry persistence).
 
 ## 2. Infrastructure & Tooling
-* **Target OS:** Windows 10/11 Endpoint
+* **Target OS:** Windows 11 Endpoint
 * **Telemetry Agent:** Microsoft Sysinternals Sysmon
 * **Configuration:** [Olaf Hartong sysmon-modular](https://github.com/olafhartong/sysmon-modular)
 * **SIEM / Forwarder:** Wazuh Agent (`ossec.conf`)
@@ -9,45 +12,41 @@ Default Windows Event Logging provides limited visibility into low-level host ac
 ## 3. Implementation Steps
 
 ### Step 3.1 — Modular Configuration Deployment
-1. Downloaded Sysmon v15.22 from Sysinternals and extracted binaries to `C:\Sysmon`.
-2. Fetched the compiled `sysmonconfig-modular.xml` directly from Olaf Hartong's repository.
+### 1. Download Modular Configuration
 
-4. Applied the modular configuration schema (`v4.91`) to the active Sysmon service via PowerShell:
+Created the working directory and fetched the latest `sysmonconfig-modular.xml` configuration directly from Olaf Hartong's repository via PowerShell:
+
+```powershell
+New-Item -ItemType Directory -Path "C:\Sysmon" -Force
+Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml](https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml)" -OutFile "C:\Sysmon\sysmonconfig-modular.xml"
+```
+
+<img width="2560" height="617" alt="Sysmon command" src="https://github.com/user-attachments/assets/13801d8d-1163-493b-afd1-c55a893efc2f" />
+
+### 2. Install / Apply the Modular Configuration
+
+Next, apply the downloaded `sysmonconfig-modular.xml` configuration file to Sysmon using PowerShell:
 
 ```powershell
 Set-Location C:\Sysmon
 .\Sysmon64.exe -c .\sysmonconfig-modular.xml -accepteula
 ```
-## Step 3.2 — Local Telemetry Verification
 
-Verified that Sysmon successfully registered configuration updates in the local Windows Event Log under `Microsoft-Windows-Sysmon/Operational`:
+<img width="2560" height="586" alt="VirtualBox_Windows11_17_09_2026_18_43_12" src="https://github.com/user-attachments/assets/18ab1c0d-018e-47f0-83d8-00c4bc8494e3" />
 
-* **Event ID 16 (Sysmon Config State Change):** Confirmed configuration hash (`SHA256=4516404...`) loaded without schema errors.
-* **Event ID 1 (Process Creation):** Executed host commands (`whoami`, `ipconfig`) to verify command-line and parent process tracking.
+### 3. Verify Configuration Load (Event ID 16)
+Verified in Windows Event Viewer (`Microsoft-Windows-Sysmon/Operational`) that **Event ID 16** fired, confirming Sysmon successfully reloaded the modular configuration file:
 
-![Sysmon Event Viewer Verification](sysmon-03-event-viewer.png)
+<img width="2560" height="1374" alt="VirtualBox_Windows11_17_09_2026_18_47_22" src="https://github.com/user-attachments/assets/0c228874-88e9-4a0a-b12b-2c08ecd9f381" />
 
----
-
-### Step 3.3 — Wazuh Agent Log Forwarding
-
-To route Sysmon event channels to the Wazuh Manager, `C:\Program Files (x86)\ossec-agent\ossec.conf` was updated with the following XML eventchannel collector block inside the `<ossec_config>` section:
+### 4. Configure Wazuh Agent Log Ingestion
+Edited the Wazuh Agent configuration file (`C:\Program Files (x86)\ossec-agent\ossec.conf`) to collect Sysmon telemetry and forward it to the SIEM:
 
 ```xml
-  <localfile>
-    <location>Microsoft-Windows-Sysmon/Operational</location>
-    <log_format>eventchannel</log_format>
-  </localfile>
+<localfile>
+  <location>Microsoft-Windows-Sysmon/Operational</location>
+  <log_format>eventchannel</log_format>
+</localfile>
 ```
 
-### Install ###
-Run with administrator rights
-~~~~
-sysmon.exe -accepteula -i sysmonconfig-export.xml
-~~~~
-
-### Update existing configuration ###
-Run with administrator rights
-~~~~
-sysmon.exe -c sysmonconfig-export.xml
-~~~~
+<img width="2560" height="1393" alt="VirtualBox_Windows11_17_09_2026_18_49_51" src="https://github.com/user-attachments/assets/8bb66bcd-79a2-42dc-973c-aed48e87d565" />
