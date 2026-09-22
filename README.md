@@ -1,28 +1,22 @@
 # SOC Home Lab
 
+I built this hands-on SOC home lab to practice real-world threat detection, log analysis, and incident response in a controlled environment.
+
 ## Overview
-A hands-on Security Operations Center (SOC) home lab designed to simulate real-world security scenarios and develop practical skills in threat detection, log analysis, incident investigation, and incident response. The environment uses Wazuh SIEM to monitor Windows endpoints with Sysmon telemetry while Kali Linux is used to generate controlled attack simulations.
+
+The setup centers on a Wazuh SIEM monitoring a Windows endpoint that I tuned with Sysmon to capture high-fidelity telemetry. To test the pipeline, I use Kali Linux to run controlled attack simulations, allowing me to analyze how malicious activity looks at the log level, write detection rules, and map alerts directly to MITRE ATT&CK.
 
 ## Architecture
 <img width="2000" height="1414" alt="architecture " src="https://github.com/user-attachments/assets/f2069641-6d5e-46f1-988d-10a3e9a460c8" />
 
 ## Tools Used
 - **Wazuh SIEM**
-- **Windows 10 Endpoint**
+- **Windows 11 Endpoint**
   - [Sysmon](configurations/01-sysmon-tuning.md) (configured with Olaf Hartong's Sysmon-Modular for enhanced telemetry)
   - Windows Event Logs
   - Atomic Red Team
 - **Kali Linux**
 - **VirtualBox**
-
-## Security Scenarios 
-- Failed login investigation
-- Nmap Recon detection
-- Suspicious PowerShell execution
-- Malware detection
-
-## Findings
-
 
 ## Skills Demonstrated
 - SIEM Monitoring using Wazuh
