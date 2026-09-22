@@ -31,3 +31,4 @@ The setup centers on a Wazuh SIEM monitoring a Windows endpoint that I tuned wit
 - Security Documentation
 - Basic Threat Hunting
 - Incident Reporting
+- Adversary Emulation & Attack Simulation (Kali Linux)
