@@ -34,7 +34,7 @@ Set-Location C:\Sysmon
 <img width="2560" height="586" alt="VirtualBox_Windows11_17_09_2026_18_43_12" src="https://github.com/user-attachments/assets/18ab1c0d-018e-47f0-83d8-00c4bc8494e3" />
 
 ### 3. Verify Configuration Load (Event ID 16)
-Verified in Windows Event Viewer (`Microsoft-Windows-Sysmon/Operational`) that **Event ID 16** fired, confirming Sysmon successfully reloaded the modular configuration file:
+Verified in Windows Event Viewer (Microsoft-Windows-Sysmon/Operational) that Event ID 16 appeared, confirming Sysmon successfully reloaded the modular configuration file:
 
 <img width="2560" height="1374" alt="VirtualBox_Windows11_17_09_2026_18_47_22" src="https://github.com/user-attachments/assets/0c228874-88e9-4a0a-b12b-2c08ecd9f381" />
 
