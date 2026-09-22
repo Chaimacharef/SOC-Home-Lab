@@ -1,22 +1,24 @@
 # Attack Simulation 1: Failed Login 
 
 ## Objective
-Detect and investigate failed authentication attempts on a Windows endpoint using Wazuh SIEM.
+In this investigation, I wanted to test whether I could detect and investigate failed login attempts on a Windows endpoint using Wazuh SIEM.
+
+The goal was to generate the activity, identify the Windows event it created, and then confirm that Wazuh was able to collect and alert on it.
 
 ## Investigation Process 
-Manually generated failed authentication attempts to trigger Windows Security Event ID 4625 and corresponding Wazuh SIEM alerts.
+I manually generated several failed login attempts on the Windows VM to create Windows Security Event ID 4625.
 
 
 <img width="2560" height="1440" alt="VirtualBox_Windows11_04_08_2026_15_52_05" src="https://github.com/user-attachments/assets/7f877c9b-2de0-425d-acb3-2bfba8f72da8" />
 
-
-Reviewed Windows Event Viewer to identify the generated authentication failures. Event ID 4625 confirmed that the failed login attempts were successfully recorded.
+I then opened Windows Event Viewer to check whether the failed login attempts had been recorded.
+I found Event ID 4625, confirming that Windows had successfully logged the failed authentication attempts.
 
 
 <img width="2560" height="1440" alt="VirtualBox_Windows11_04_08_2026_16_12_31" src="https://github.com/user-attachments/assets/9b118632-6cf6-4ad6-a9e9-24c6079c397d" />
 
 
-The event details were examined to identify the affected account, logon type, and failure reason. These fields were used to validate the activity and correlate it with SIEM telemetry.
+I reviewed the event details to understand what happened and to identify the affected account, logon type, and reason for the authentication failure.
 
 | Field | Details |
 |---|---|
@@ -26,7 +28,8 @@ The event details were examined to identify the affected account, logon type, an
 | Failure Reason | Unknown user name or bad password |
 | Status Code | 0xC000006D |
 
-Wazuh successfully ingested the Windows Security event and generated an alert. The alert metadata, severity, and associated event information were reviewed to validate successful detection.
+then checked Wazuh to see whether the Windows event had been successfully collected and generated an alert.
+Wazuh successfully received the event, and I reviewed the alert details, severity, and event information to make sure the activity was being detected correctly.
 
 
 <img width="2560" height="1440" alt="VirtualBox_Windows11_04_08_2026_16_06_10" src="https://github.com/user-attachments/assets/7d165e8e-b092-4807-9e46-0b98ee9e8d11" />
@@ -43,10 +46,15 @@ Wazuh successfully ingested the Windows Security event and generated an alert. T
 - **Tactic:** Credential Access
 
 ## Findings
-✅ Failed authentication activity was successfully simulated on the Windows endpoint.  
-✅ Windows Security Event ID 4625 was generated and captured.  
-✅ Event data was successfully ingested and monitored through Wazuh SIEM.  
-✅ Detection and log correlation were validated through SIEM analysis.
+✅ I successfully generated failed authentication activity on the Windows endpoint.
+
+✅ Windows Security Event ID 4625 was generated and recorded.
+
+✅ Wazuh successfully collected the Windows security event.
+
+✅ Wazuh generated an alert for the activity.
+
+✅ I was able to review and correlate the Windows event with the SIEM alert.
 
 ## Defense Recommendations
 1. Configure account lockout policies to limit repeated failed authentication attempts.
