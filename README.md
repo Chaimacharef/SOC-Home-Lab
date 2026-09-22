@@ -11,6 +11,7 @@ A hands-on Security Operations Center (SOC) home lab designed to simulate real-w
 - **Windows 10 Endpoint**
   - [Sysmon](configurations/01-sysmon-tuning.md) (configured with Olaf Hartong's Sysmon-Modular for enhanced telemetry)
   - Windows Event Logs
+  - Atomic Red Team
 - **Kali Linux**
 - **VirtualBox**
 
