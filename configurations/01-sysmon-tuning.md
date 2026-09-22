@@ -17,7 +17,7 @@ Created the working directory and fetched the latest `sysmonconfig-modular.xml` 
 
 ```powershell
 New-Item -ItemType Directory -Path "C:\Sysmon" -Force
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml -OutFile "C:\Sysmon\sysmonconfig-modular.xml"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml" -OutFile "C:\Sysmon\sysmonconfig-modular.xml"
 ```
 
 <img width="2560" height="617" alt="Sysmon command" src="https://github.com/user-attachments/assets/13801d8d-1163-493b-afd1-c55a893efc2f" />
