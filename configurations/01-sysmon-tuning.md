@@ -3,22 +3,21 @@ By default, Windows Sysmon generates thousands of noisy, routine system logs eve
 
 This repository documents how I configured and tuned Microsoft Sysmon using **Olaf Hartong’s `sysmon-modular` framework**. The goal of this project is to filter out harmless background OS noise, reduce SIEM storage bloat, and ensure high-fidelity telemetry is captured for critical attack techniques (like process injection, credential dumping, and registry persistence).
 
-## 2. Infrastructure & Tooling
+## 1. Infrastructure & Tooling
 * **Target OS:** Windows 11 Endpoint
 * **Telemetry Agent:** Microsoft Sysinternals Sysmon
 * **Configuration:** [Olaf Hartong sysmon-modular](https://github.com/olafhartong/sysmon-modular)
 * **SIEM / Forwarder:** Wazuh Agent (`ossec.conf`)
 
-## 3. Implementation Steps
+## 2. Implementation Steps
 
-### Step 3.1 — Modular Configuration Deployment
 ### 1. Download Modular Configuration
 
 Created the working directory and fetched the latest `sysmonconfig-modular.xml` configuration directly from Olaf Hartong's repository via PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Path "C:\Sysmon" -Force
-Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml](https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml)" -OutFile "C:\Sysmon\sysmonconfig-modular.xml"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml -OutFile "C:\Sysmon\sysmonconfig-modular.xml"
 ```
 
 <img width="2560" height="617" alt="Sysmon command" src="https://github.com/user-attachments/assets/13801d8d-1163-493b-afd1-c55a893efc2f" />
